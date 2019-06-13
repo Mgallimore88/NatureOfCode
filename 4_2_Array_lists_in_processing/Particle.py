@@ -21,7 +21,6 @@ class Particle:
     def display(self):
         no_stroke()
         fill(self.mass *200, self.acceleration.magnitude_sq *500, self.velocity.magnitude_sq * 20)
-        print(self.acceleration.magnitude_sq)
         circle((self.location.x,self.location.y),self.mass*20)
 
     def follow(self, mouse_x, mouse_y):

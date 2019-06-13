@@ -38,8 +38,8 @@ def draw():
 
         if mouse_is_pressed:
             particles.append(Particle(width,height,500,100))
-            # for m in range(len(particles)):
-                # particles[m].follow(mouse_x, mouse_y)
+            for m in range(len(particles)):
+                particles[m].follow(mouse_x, mouse_y)
             print(f"there are {len(particles)} particles.")
             return
 

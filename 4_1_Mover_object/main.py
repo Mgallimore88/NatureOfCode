@@ -3,7 +3,6 @@ from Mover import *
 from wind import *
 
 def setup():
-    
     global movers
     size(640,480)
     movers = Mover(width,height, 100, 100)
@@ -14,7 +13,6 @@ def draw():
 
     movers.update()
     movers.display()
-
     movers.keep_inside_window()
 
     if mouse_is_pressed:

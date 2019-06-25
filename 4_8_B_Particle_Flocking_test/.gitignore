@@ -1,0 +1,9 @@
+toxiclibscore/
+toxiclibs_p5/
+verletphysics/
+volumeutils/
+simutils/
+audioutils/
+colorutils/
+datautils/
+__pycache__/

@@ -4,12 +4,12 @@ import copy
 class Vehicle:
     def __init__(self, start_x=width/2, start_y=height/2):
         self.location = Vector(start_x, start_y)
-        self.velocity = Vector(random_gaussian(0, 1), random_gaussian(0, 1))
+        self.velocity = Vector(random_gaussian(2, 3), random_gaussian(2, 3))
         self.mass = 20
         self.acceleration = Vector(0.01, 0.01)
-        self.desired_velocity = Vector(-1, 0)
-        self.max_speed = 0.005
-        self.max_turning = 2
+        self.desired_velocity = self.velocity.copy()
+        self.max_speed = 4
+        self.max_turning = 1
 
     def moth_steer(self, other):
         self.desired_velocity = other.location - self.location
@@ -42,8 +42,8 @@ class Vehicle:
         self.unit_velocity = copy.copy(self.velocity)
         self.unit_velocity.normalize()
         self.maximized_velocity = self.unit_velocity * speed
-        self.steering_force = self.maximized_velocity - self.velocity
-        self.acceleration += self.steering_force
+        self.constantspeed_force = self.maximized_velocity - self.velocity
+        self.acceleration += self.constantspeed_force
         print(self.velocity.magnitude)
 
     def applyForce(self, force):
@@ -77,3 +77,37 @@ class Vehicle:
         elif self.location.y >= height:
             self.location. y = height-1
             self.velocity.y *= -1
+
+
+    def avoid_edges(self):
+        if 25 >= self.location.x:
+            self.desired_velocity =Vector(self.max_speed, self.velocity.y)
+
+            self.steering_force = self.desired_velocity - self.velocity
+            self.steering_force.limit(self.max_turning)
+            self.acceleration += self.steering_force
+
+
+        elif self.location.x >= width - 25:
+            self.desired_velocity =Vector(-self.max_speed, self.velocity.y)
+
+            self.steering_force = self.desired_velocity - self.velocity
+            self.steering_force.limit(self.max_turning)
+            self.acceleration += self.steering_force
+
+
+        elif 25 >= self.location.y:
+            self.desired_velocity =Vector(self.velocity.x, self.max_speed)
+
+            self.steering_force = self.desired_velocity - self.velocity
+            self.steering_force.limit(self.max_turning)
+            self.acceleration += self.steering_force
+
+
+        elif self.location.y >= height - 25:
+            self.desired_velocity =Vector(self.velocity.x, -self.max_speed)
+
+
+            self.steering_force = self.desired_velocity - self.velocity
+            self.steering_force.limit(self.max_turning)
+            self.acceleration += self.steering_force

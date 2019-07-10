@@ -17,11 +17,12 @@ def draw():
     background(120)
     target.display()
 
-    brum.constant_speed()
-    brum.keep_inside_window()
     brum.update()
     brum.display()
-    brum.moth_steer(target)
+    brum.keep_inside_window()
+    brum.avoid_edges()
+
+#     brum.moth_steer(target)
 
 
 

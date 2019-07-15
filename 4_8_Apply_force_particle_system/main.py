@@ -1,11 +1,13 @@
-from p5 import *
-from ParticleSystem import *
+from p5 import run, background, size, Vector
+from ParticleSystem import ParticleSystem
 from SurfaceGravity import SurfaceGravity
 from wind import Wind
 from Attractor import Repeller
+
+
 def setup():
     size(640,480)
-    global fountain
+    global fountains
     global gravity
     global wind
     global repeller
@@ -15,11 +17,14 @@ def setup():
     ground = SurfaceGravity()
     gravity = ground.attract()
 
-    initial_num_of_fountains = 1
-    fountain = [0] * initial_num_of_fountains
-    fountain[0] = ParticleSystem()
+    initial_num_of_fountains = 2
+    fountains = []
+    for i in range(initial_num_of_fountains):
+        fountains.append(ParticleSystem(i*100, i*100, i))
+
+
 def draw():
-    global fountain
+    global fountains
     global gravity
     global wind
     global repeller
@@ -27,22 +32,21 @@ def draw():
     background(120)
     
     if mouse_is_pressed:
-        fountain.append(ParticleSystem(len(fountain)))
-        print(f"there are {len(fountain)} fountains.")
+        fountains.append(ParticleSystem(mouse_x, mouse_y, len(fountains)))
+        print(f"there are {len(fountains)} fountains.")
 
-    for n in reversed(range(len(fountain))):
-        if fountain[n].is_empty:
-            print(f"fountain {n} empty")
-            fountain.pop(n)
-        if mouse_is_pressed and fountain[n].origin.x == 0: # unable to position the initial fountain since mouse_x does not exist yet
-            fountain.pop(n)
-        fountain[n].run()
-        fountain[n].apply_force(gravity)
-        fountain[n].apply_repeller(repeller)
+    for fountain in reversed(fountains):
+        
+        if fountain.is_empty:
+            print(f"fountain {fountain.identifier} empty")
+            fountains.remove(fountain)
+        fountain.update()
+        fountain.apply_force(gravity)
+        fountain.apply_repeller(repeller)
         repeller.display()
         if key_is_pressed:
             mouse = Vector(mouse_x, mouse_y)
-            fountain[n].apply_force(wind.wind_force(mouse))
+            fountain.apply_force(wind.wind_force(mouse))
             wind.display(mouse)
 
 run()

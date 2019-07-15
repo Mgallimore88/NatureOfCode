@@ -1,9 +1,9 @@
 from p5 import *
-    
+ #   
 class Particle:
-    def __init__(self, start_x, start_y, identifier = 0):
+    def __init__(self, location, identifier = 0):
         self.identifier = identifier
-        self.location = Vector(start_x, start_y)
+        self.location = location
         self.velocity = Vector(random_gaussian(0,1),random_gaussian(0,1))
         self.mass = 20
         self.acceleration = Vector(0.01, 0.01)
@@ -53,8 +53,8 @@ class Particle:
             # self.velocity.y *= -1
 
 class SquareParticle(Particle):
-    def __init__(self, start_x, start_y, identifier = 0):
-        Particle.__init__(self, start_x, start_y, identifier = 0)
+    def __init__(self, location, identifier = 0):
+        Particle.__init__(self, location, identifier = 0)
     
     def display(self):
         stroke(0,self.lifespan)

@@ -9,8 +9,8 @@ class Vehicle:
         self.mass = 20
         self.acceleration = Vector(0.01, 0.01)
         self.desired_velocity = self.velocity.copy()
-        self.max_speed = 2
-        self.max_turning = 1
+        self.max_speed = 0.1
+        self.max_turning = 10
 
     def moth_steer(self, other):
         self.desired_velocity = other.location - self.location
@@ -49,18 +49,19 @@ class Vehicle:
 
     def applyForce(self, force):
         self.acceleration += force / self.mass
+        # line((self.location.x,self.location.y), (self.location.x - force.x, self.location.y - force.y))
+
 
     def update(self):
         self.location += self.velocity
         self.velocity += self.acceleration
         self.acceleration *= 0
 
+    
+
     def display(self):
         stroke(255)
         fill(255)
-        x = self.location.x
-        y = self.location.y
-        m = self.mass
         theta = self.velocity.angle
         with push_matrix():
             translate(self.location.x, self.location.y)

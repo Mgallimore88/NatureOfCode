@@ -4,7 +4,8 @@ from p5 import *
 class ParticleSystem:
     def __init__(self, identifier = 0, number_of_particles = 1):
         self.number_of_particles = number_of_particles
-        self.particles = [0] * self.number_of_particles
+        self.particles = [] 
+        self.number_of_particles
         self.identifier = identifier
         self.is_empty = False
         self.origin = Vector(mouse_x, mouse_y)
@@ -12,12 +13,12 @@ class ParticleSystem:
         self.height = 100
         self.counter = 0
         for n in range(self.number_of_particles):
-            self.particles[n] = SquareParticle(self.origin.x, self.origin.y, self.identifier)
+            self.particles.append(SquareParticle(self.origin.x, self.origin.y, n))
 
     def apply_force(self, force):
-        for n in reversed(range(len(self.particles))):
-            self.particles[n].applyForce(force)
-    
+        for particle in self.particles:
+            self.particles.applyForce(force)
+
     
     def run(self):
         for n in reversed(range(len(self.particles))):

@@ -1,5 +1,6 @@
 from p5 import *
-    
+
+
 class Particle:
     def __init__(self, start_x, start_y, identifier = 0):
         self.identifier = identifier

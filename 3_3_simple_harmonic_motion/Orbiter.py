@@ -10,7 +10,7 @@ class Orbiter:
         print("Hello")
 
     def __init__(self):
-        self.x_period = random_uniform(50,150)
+        self.x_period = random_uniform(50, 150)
         self.y_period = random_uniform(50, 150)
         self.x_amplitude = random_uniform(100, 200)
         self.y_amplitude = random_uniform(100, 200)
@@ -21,8 +21,6 @@ class Orbiter:
         self.y = self.y_amplitude * cos(self.frame_count * TWO_PI / self.y_period)
 
     def display(self):
-        stroke(250)  
-        ellipse((self.x,self.y),30, 30)
-        line((0,0),(self.x,self.y))
-        
-
+        stroke(250)
+        ellipse((self.x, self.y), 30, 30)
+        line((0, 0), (self.x, self.y))

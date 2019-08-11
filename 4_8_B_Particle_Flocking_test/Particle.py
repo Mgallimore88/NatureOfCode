@@ -60,7 +60,7 @@ class SquareParticle(Particle):
 
     def display(self):
         stroke(0, self.lifespan)
-        fill(0, self.lifespan/2)
+        fill(0, self.lifespan / 2)
         rect((self.location.x, self.location.y), self.mass, self.mass)
 
     def keep_inside_window(self):

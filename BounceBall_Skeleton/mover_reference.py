@@ -2,14 +2,15 @@ from p5 import *
 
 mover = None
 
+
 class Mover:
     def __init__(self):
         # our object has two Vectors: location and velocity
-        self.location = Vector(random_uniform(width),
-                               random_uniform(height))
+        self.location = Vector(random_uniform(width), random_uniform(height))
 
-        self.velocity = Vector(random_uniform(low=-2, high=2),
-                               random_uniform(low=-2, high=2))
+        self.velocity = Vector(
+            random_uniform(low=-2, high=2), random_uniform(low=-2, high=2)
+        )
 
     def update(self):
         # Motion 101: Locations change by velocity
@@ -33,6 +34,7 @@ class Mover:
         if self.location.y < 0:
             self.location.y = height
 
+
 def setup():
     global mover
     size(200, 200)
@@ -40,6 +42,7 @@ def setup():
 
     # make the mover object
     mover = Mover()
+
 
 def draw():
     no_stroke()
@@ -51,5 +54,6 @@ def draw():
     mover.check_edges()
     mover.display()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     run()

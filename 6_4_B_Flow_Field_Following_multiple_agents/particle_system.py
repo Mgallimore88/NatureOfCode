@@ -7,7 +7,7 @@ from p5 import *
 class ParticleSystem:
     def __init__(self, identifier=0, number_of_vehicles=3):
         self.number_of_vehicles = number_of_vehicles
-        self.vehicles = [] 
+        self.vehicles = []
         self.identifier = identifier
         self.vehicle_identifier = 0
         self.is_empty = False
@@ -16,9 +16,13 @@ class ParticleSystem:
         self.height = 100
         self.counter = 0
         for n in range(self.number_of_vehicles):
-            self.vehicles.append(Vehicle(width * self.vehicle_identifier,
-                                         self.height * self.vehicle_identifier,
-                                         self.vehicle_identifier))
+            self.vehicles.append(
+                Vehicle(
+                    width * self.vehicle_identifier,
+                    self.height * self.vehicle_identifier,
+                    self.vehicle_identifier,
+                )
+            )
             self.vehicle_identifier += 1
 
     def run(self, field):

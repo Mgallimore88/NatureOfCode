@@ -1,17 +1,20 @@
 from p5 import *
 from ParticleSystem import *
 
+
 def setup():
-    size(640,480)
+    size(640, 480)
     global fountain
     initial_num_of_fountains = 1
     fountain = [0] * initial_num_of_fountains
     fountain[0] = ParticleSystem()
+
+
 def draw():
     global fountain
 
     background(120)
-    
+
     if mouse_is_pressed:
         fountain.append(ParticleSystem(len(fountain)))
         print(f"there are {len(fountain)} fountains.")
@@ -19,8 +22,11 @@ def draw():
         if fountain[n].is_empty:
             print(f"fountain {n} empty")
             fountain.pop(n)
-        if mouse_is_pressed and fountain[n].origin.x == 0: # unable to position the initial fountain since mouse_x does not exist yet
+        if (
+            mouse_is_pressed and fountain[n].origin.x == 0
+        ):  # unable to position the initial fountain since mouse_x does not exist yet
             fountain.pop(n)
         fountain[n].run()
+
 
 run()

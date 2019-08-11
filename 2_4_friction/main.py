@@ -1,22 +1,24 @@
 from p5 import *  ##interesting faults - energy seems to come into the system from the edges
 from Mover import *
 
+
 def setup():
     global wind
     global gravity
     global movers
 
-    gravity = Vector(0,2)
-    wind = Vector(0.4,0)
-    size(640,480)
+    gravity = Vector(0, 2)
+    wind = Vector(0.4, 0)
+    size(640, 480)
     movers = [0] * 5
     for n in range(len(movers)):
-        movers[n]=Mover(width,height)
+        movers[n] = Mover(width, height)
+
 
 def draw():
     background(0)
     for n in range(len(movers)):
-        movers[n].applyForce(gravity*movers[n].mass)
+        movers[n].applyForce(gravity * movers[n].mass)
         movers[n].update()
         movers[n].calculateFriction()
         movers[n].applyForce(movers[n].friction)
@@ -28,5 +30,6 @@ def draw():
             movers[n].applyForce(wind)
         elif key_is_pressed:
             movers[n].applyForce(-wind)
+
 
 run()

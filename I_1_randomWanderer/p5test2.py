@@ -1,11 +1,13 @@
-
 from p5 import *
+
 recording = True
+
 
 def setup():
     size(640, 360)
     no_stroke()
     background(0)
+
 
 def draw():
     if not recording:
@@ -20,10 +22,12 @@ def draw():
 
     circle((mouse_x, mouse_y), circle_size)
 
+
 def key_pressed(event):
     global recording
-    if event.key == 'SPACE':
+    if event.key == "SPACE":
         recording = not recording
     background(0)
+
 
 run()

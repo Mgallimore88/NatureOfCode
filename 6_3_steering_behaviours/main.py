@@ -11,6 +11,7 @@ def setup():
     brum = Vehicle()
     target = Target()
 
+
 def draw():
     global target
     global brum
@@ -22,13 +23,10 @@ def draw():
     brum.keep_inside_window()
     brum.avoid_edges()
 
-#     brum.moth_steer(target)
-
-
+    #     brum.moth_steer(target)
 
     if mouse_is_pressed:
         target.follow()
-   
 
 
 run()

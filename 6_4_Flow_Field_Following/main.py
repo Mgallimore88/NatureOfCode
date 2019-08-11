@@ -12,6 +12,7 @@ def setup():
     brum = Vehicle()
     field = FlowField(field_strength)
 
+
 def draw():
     global brum
     global field
@@ -29,5 +30,6 @@ def draw():
 
     brum.spawn_at_mouse_position(mouse_x, mouse_y)
     brum.avoid_zero_velocity()
+
 
 run()

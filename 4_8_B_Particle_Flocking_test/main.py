@@ -11,7 +11,7 @@ def setup():
     global gravity
     global wind
     global repeller
-    repeller = Repeller(Vector(width/2, height - 100), 40)
+    repeller = Repeller(Vector(width / 2, height - 100), 40)
 
     wind = Wind()
     ground = SurfaceGravity()
@@ -27,8 +27,6 @@ def draw():
     global fountain
     background(120)
     fountain[0].run()
-
-
 
 
 run()

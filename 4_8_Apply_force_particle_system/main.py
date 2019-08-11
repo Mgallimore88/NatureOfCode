@@ -6,12 +6,12 @@ from Attractor import Repeller
 
 
 def setup():
-    size(640,480)
+    size(640, 480)
     global fountains
     global gravity
     global wind
     global repeller
-    repeller = Repeller(Vector(width/2, height - 100), 40)
+    repeller = Repeller(Vector(width / 2, height - 100), 40)
 
     wind = Wind()
     ground = SurfaceGravity()
@@ -20,7 +20,7 @@ def setup():
     initial_num_of_fountains = 2
     fountains = []
     for i in range(initial_num_of_fountains):
-        fountains.append(ParticleSystem(i*100, i*100, i))
+        fountains.append(ParticleSystem(i * 100, i * 100, i))
 
 
 def draw():
@@ -30,13 +30,13 @@ def draw():
     global repeller
 
     background(120)
-    
+
     if mouse_is_pressed:
         fountains.append(ParticleSystem(mouse_x, mouse_y, len(fountains)))
         print(f"there are {len(fountains)} fountains.")
 
     for fountain in reversed(fountains):
-        
+
         if fountain.is_empty:
             print(f"fountain {fountain.identifier} empty")
             fountains.remove(fountain)
@@ -48,5 +48,6 @@ def draw():
             mouse = Vector(mouse_x, mouse_y)
             fountain.apply_force(wind.wind_force(mouse))
             wind.display(mouse)
+
 
 run()

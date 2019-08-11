@@ -1,5 +1,6 @@
-from p5 import PI, Vector, line, circle, triangle, fill, stroke
+from p5 import PI, Vector, line, circle, triangle, fill, stroke, ellipse
 from p5 import random_gaussian, translate, rotate_z, push_matrix, run
+import scalar_projection as sp
 import copy
 
 
@@ -10,25 +11,53 @@ class Vehicle:
         self.mass = 15
         self.acceleration = Vector(0.01, 0.01)
         self.desired_velocity = Vector(0, 0)
-        self.max_speed = 1
-        self.max_turning = 1
+        self.max_speed = .1
+        self.max_turning = .5
         self.velocity = copy.copy(self.initial_velocity)
+        self.debug = True
 
     def follow(self, path):
-        #  calculate future location
+        # calculate future location
         predicted_location = copy.copy(self.velocity)
         predicted_location.normalize()
         predicted_location *= 50
         predicted_location += self.location
-        line(self._tup(self.location) , (self._tup(predicted_location)))
+        line(self._tup(self.location), (self._tup(predicted_location)))
+
         #  check whether future location is on path
+        # get normal point
+        norm = sp.scalar_projection(predicted_location, path.point_a, path.point_b)
+
+        distance = Vector.distance(norm, predicted_location)
+        direction = path.point_b - path.point_a
+        direction.normalize()
+        direction *= 20
+        target = norm + direction
+
+        
+        if distance > path.radius:
+            self.steer(target)
+            if self.debug:
+                fill(255, 0, 0)
+                ellipse((norm.x, norm.y), 10, 10)
+                fill(0, 255, 0)
+                ellipse((target.x, target.y), 10, 10)
+
         #  if yes do nothing
         #  if no: find closest point on path
         #         move along path a little (target)
         #         seek target
 
-    def moth_steer(self, other):
+    def moth_steer(self, other):  # seeks an object with location vector
         self.desired_velocity = other.location - self.location
+        self.desired_velocity.normalize
+        self.desired_velocity *= self.max_speed
+        self.steering_force = self.desired_velocity - self.velocity
+        self.steering_force.limit(self.max_turning)
+        self.acceleration += self.steering_force
+
+    def steer(self, target):  # takes a location vector
+        self.desired_velocity = target - self.location
         self.desired_velocity.normalize
         self.desired_velocity *= self.max_speed
         self.steering_force = self.desired_velocity - self.velocity
@@ -181,7 +210,3 @@ class Vehicle:
         #  takes a tuple returns a vector
         tup = (vec.x, vec.y)
         return tup
-
-
-    
-

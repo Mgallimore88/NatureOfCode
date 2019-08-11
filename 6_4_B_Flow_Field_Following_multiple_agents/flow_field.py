@@ -27,9 +27,8 @@ class FlowField:
             for column in range(self.number_of_columns):
                 self.perl_x += 0.05
                 perlin_2d = noise(self.perl_x, self.perl_y)
-                theta = remap(perlin_2d, (0, 1), (0, 2*PI))
-                self.field[row].append(
-                    Vector.from_angle(theta) * vector_strength)
+                theta = remap(perlin_2d, (0, 1), (0, 2 * PI))
+                self.field[row].append(Vector.from_angle(theta) * vector_strength)
 
     def alter_vectors(self):
         # 3D perlin noise. Z axis is time.
@@ -38,7 +37,7 @@ class FlowField:
         for row in range(self.number_of_rows):
             for column in range(self.number_of_columns):
                 perlin_2d = noise(self.perl_x, self.perl_y, self.perl_time)
-                theta = remap(perlin_2d, (0, 1), (0, 2*PI))
+                theta = remap(perlin_2d, (0, 1), (0, 2 * PI))
                 self.field[row][column].angle = theta
                 self.perl_y += 0.01
             self.perl_x += 0.01
@@ -54,7 +53,7 @@ class FlowField:
                 vector_x *= 10
                 vector_y *= 10
                 with push_matrix():
-                    translate(self.resolution/2, self.resolution/2)
+                    translate(self.resolution / 2, self.resolution / 2)
                     line((origin), (origin[0] + vector_x, origin[1] + vector_y))
                     reset_matrix()
 
@@ -64,12 +63,12 @@ class FlowField:
         for row in range(self.number_of_rows):
             line((0, row * self.resolution), (width, row * self.resolution))
 
-    def lookup(self, x, y):  
-        # Returns a force vector 
-        # for given location in field 
+    def lookup(self, x, y):
+        # Returns a force vector
+        # for given location in field
         # specified by pixel position
         column = int(((x / self.resolution) - 0.5))
         row = int(((y / self.resolution) - 0.5))
-        column = constrain(column, 0, len(self.field[0])-1)
-        row = constrain(row, 0, len(self.field)-1)
+        column = constrain(column, 0, len(self.field[0]) - 1)
+        row = constrain(row, 0, len(self.field) - 1)
         return self.field[row][column]

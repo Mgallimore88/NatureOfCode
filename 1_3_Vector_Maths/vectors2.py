@@ -8,7 +8,8 @@ def setup():
     global ball
     size(640, 360)
     no_stroke()
-    ball = Ball(width,height)
+    ball = Ball(width, height)
+
 
 def draw():
     background(0)
@@ -17,9 +18,10 @@ def draw():
 
     ball.moveBall()
 
+
 def key_pressed(event):
     ball.moving = not ball.moving
     print("key_pressed")
 
-run()
 
+run()

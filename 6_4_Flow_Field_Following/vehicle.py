@@ -3,8 +3,7 @@ import copy
 
 
 class Vehicle:
-
-    def __init__(self, start_x=width/2, start_y=height/2):
+    def __init__(self, start_x=width / 2, start_y=height / 2):
         self.location = Vector(start_x, start_y)
         self.initial_velocity = Vector(random_gaussian(2, 3), random_gaussian(2, 3))
         self.mass = 15
@@ -26,8 +25,7 @@ class Vehicle:
         self.desired_velocity = other.location - self.location
         desired_magnitude = abs(self.desired_velocity.magnitude)
         if desired_magnitude < 100:
-            self.arrival_speed = remap(
-                desired_magnitude, (0, 100), (0, self.max_speed))
+            self.arrival_speed = remap(desired_magnitude, (0, 100), (0, self.max_speed))
             print(desired_magnitude)
             self.desired_velocity.normalize
             self.desired_velocity *= self.arrival_speed
@@ -53,7 +51,7 @@ class Vehicle:
         self.acceleration += force / self.mass
         # line((self.location.x,self.location.y), (self.location.x - force.x, self.location.y - force.y))
 
-    def apply_drag(self, strength = 1):
+    def apply_drag(self, strength=1):
         neg_x = self.velocity.x * -1
         neg_y = self.velocity.y * -1
         drag_vector = Vector(neg_x, neg_y)
@@ -63,12 +61,10 @@ class Vehicle:
         # print(f"drag_force = {drag_force}")
         self.applyForce(drag_force)
 
-
     def update(self):
         self.location += self.velocity
         self.velocity += self.acceleration
         self.acceleration *= 0
-
 
     def display(self):
         stroke(255)
@@ -76,12 +72,16 @@ class Vehicle:
         theta = self.velocity.angle
         with push_matrix():
             translate(self.location.x, self.location.y)
-            rotate_z(theta + PI/2)
-            triangle((0, -self.mass/2), (-self.mass/4 ,self.mass/2), (self.mass/4 ,self.mass/2))
-        fill(0,255,0)
-        circle((self.location.x,self.location.y), 5)
+            rotate_z(theta + PI / 2)
+            triangle(
+                (0, -self.mass / 2),
+                (-self.mass / 4, self.mass / 2),
+                (self.mass / 4, self.mass / 2),
+            )
+        fill(0, 255, 0)
+        circle((self.location.x, self.location.y), 5)
 
-        #debug vector lines
+        # debug vector lines
 
         # line((self.location.x, self.location.y), (self.location.x +
         #                                         self.velocity.x * 10, self.location.y + self.velocity.y * 10))
@@ -103,7 +103,7 @@ class Vehicle:
             self.velocity.y *= -1
 
         elif self.location.y >= height:
-            self.location. y = height-1
+            self.location.y = height - 1
             self.velocity.y *= -1
 
     def wraparound(self):
@@ -117,14 +117,14 @@ class Vehicle:
             self.location.y = height
 
         elif self.location.y >= height:
-            self.location. y = 1
+            self.location.y = 1
 
     def spawn_at_mouse_position(self, x, y):
         if mouse_is_pressed:
             self.location = Vector(x, y)
-            self.velocity = Vector(0,0)
+            self.velocity = Vector(0, 0)
             self.apply_random_velocity(1)
-            self.acceleration = Vector(0,0)
+            self.acceleration = Vector(0, 0)
 
     def avoid_zero_velocity(self):
         if self.velocity.x == 0 and self.velocity.y == 0:
@@ -132,32 +132,32 @@ class Vehicle:
 
     def apply_random_velocity(self, mean):
         self.velocity.x += random_gaussian(mean)
-        self.velocity.y += random_gaussian(mean)       
+        self.velocity.y += random_gaussian(mean)
 
     def avoid_edges(self):
         if 25 >= self.location.x:
-            self.desired_velocity =Vector(self.max_speed, self.velocity.y)
+            self.desired_velocity = Vector(self.max_speed, self.velocity.y)
 
             self.steering_force = self.desired_velocity - self.velocity
             self.steering_force.limit(self.max_turning)
             self.acceleration += self.steering_force
 
         elif self.location.x >= width - 25:
-            self.desired_velocity =Vector(-self.max_speed, self.velocity.y)
+            self.desired_velocity = Vector(-self.max_speed, self.velocity.y)
 
             self.steering_force = self.desired_velocity - self.velocity
             self.steering_force.limit(self.max_turning)
             self.acceleration += self.steering_force
 
         elif 25 >= self.location.y:
-            self.desired_velocity =Vector(self.velocity.x, self.max_speed)
+            self.desired_velocity = Vector(self.velocity.x, self.max_speed)
 
             self.steering_force = self.desired_velocity - self.velocity
             self.steering_force.limit(self.max_turning)
             self.acceleration += self.steering_force
 
         elif self.location.y >= height - 25:
-            self.desired_velocity =Vector(self.velocity.x, -self.max_speed)
+            self.desired_velocity = Vector(self.velocity.x, -self.max_speed)
 
             self.steering_force = self.desired_velocity - self.velocity
             self.steering_force.limit(self.max_turning)

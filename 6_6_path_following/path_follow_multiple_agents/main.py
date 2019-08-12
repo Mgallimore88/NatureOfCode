@@ -1,33 +1,32 @@
 from p5 import size, background, run, Vector
 import vispy
-from vehicle import Vehicle
+from particle_system import ParticleSystem
 from path import Path
 
 
 def setup():
     size(800, 600)
-    global mover
+    global vehicles
     global path
-    mover = Vehicle()
+    vehicles = ParticleSystem()
     path = Path()
 
 
 def draw():
-    global mover
+    global vehicles
     global path
     background(120)
-
-    mover.follow(path)
-    mover.update()
-    mover.display()
     path.display()
-    mover.follow(path)
-    mover.apply_drag(0.01)
-    mover.wraparound()
-    mover.spawn_at_mouse_position(mouse_x, mouse_y)
+
+    vehicles.update(path)
+
+    if mouse_is_pressed:
+        vehicles.add_one()
 
     if key_is_pressed:
         path.update_path()
+        vehicles.sub_one()
+
 
 
 

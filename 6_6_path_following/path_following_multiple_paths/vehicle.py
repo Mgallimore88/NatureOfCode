@@ -11,8 +11,8 @@ class Vehicle:
         self.mass = 15
         self.acceleration = Vector(0.01, 0.01)
         self.desired_velocity = Vector(0, 0)
-        self.max_speed = random_gaussian(0.1,0.05)
-        self.max_turning = .5
+        self.max_speed = random_gaussian(0.1, 0.05)
+        self.max_turning = 0.5
         self.velocity = copy.copy(self.initial_velocity)
         self.debug = True
 
@@ -20,24 +20,34 @@ class Vehicle:
         # calculate future location
         predicted_location = copy.copy(self.velocity)
         predicted_location.normalize()
-        predicted_location *= 50
+        predicted_location *= 10
         predicted_location += self.location
+        shortest_distance = width  # initialise to a large number
         # check whether future location is on path
-        norm = sp.scalar_projection(predicted_location, path.point_a, path.point_b)
-        distance = Vector.distance(norm, predicted_location)
-        direction = path.point_b - path.point_a
-        direction.normalize()
-        direction *= 20
-        target = norm + direction
 
-        if distance > path.radius:
-            self.steer(target)
-            if self.debug:
-                line(self._tup(self.location), (self._tup(predicted_location)))
-                fill(255, 0, 0)
-                ellipse((norm.x, norm.y), 10, 10)
-                fill(0, 255, 0)
-                ellipse((target.x, target.y), 10, 10)
+        for i in range(len(path.points) - 1):
+            point_a = path.points[i]
+            point_b = path.points[i + 1]
+            norm = sp.scalar_projection(predicted_location, point_a, point_b)
+            if(norm.x < point_a.x or norm.x > point_b.x):
+                continue
+            distance = Vector.distance(norm, predicted_location)
+            if distance < shortest_distance:
+                shortest_distance = distance
+                direction = point_b - point_a
+                direction.normalize()
+                direction *= 20
+                target = norm + direction
+
+
+            if shortest_distance > path.radius:
+                self.steer(target)
+                if self.debug:
+                    line(self._tup(self.location), (self._tup(predicted_location)))
+                    fill(255, 0, 0)
+                    ellipse((norm.x, norm.y), 10, 10)
+                    fill(0, 255, 0)
+                    ellipse((target.x, target.y), 10, 10)
 
     def moth_steer(self, other):  # seeks an object with location vector
         self.desired_velocity = other.location - self.location

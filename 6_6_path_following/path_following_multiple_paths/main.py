@@ -5,11 +5,12 @@ from path import Path
 
 
 def setup():
-    size(80, 60)
+    size(800, 600)
     global vehicles
     global path
     vehicles = ParticleSystem()
     path = Path()
+    path.populate()
 
 
 def draw():
@@ -24,10 +25,8 @@ def draw():
         vehicles.add_one()
 
     if key_is_pressed:
-        path.update_path()
-        vehicles.sub_one()
-
-
+        # vehicles.sub_one()
+        path.populate()
 
 
 run()

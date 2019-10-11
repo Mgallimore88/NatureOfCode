@@ -11,4 +11,4 @@ The square particles change their mass on hitting the left or right walls.
 A global force can be applied by clicking the mouse 
 The strength and direction of the global force is proportonal to the vector from mouse to centre.
 
-![]["/PS1.gif"]
+![](/PS1.gif)

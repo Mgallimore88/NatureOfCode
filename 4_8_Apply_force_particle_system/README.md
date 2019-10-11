@@ -1,6 +1,8 @@
 <h1 >Particle System Forces </h1>
 
-The particles come from one source which has a limited lifespan.
+The particles come from one source which has a limited lifespan. 
+
+'Dead' particles and sources are managed and removed from memory when no longer needed.
 
 The particles have mass, which affects their inertia.
 

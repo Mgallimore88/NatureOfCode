@@ -1,6 +1,6 @@
 Repository for Mike's Nature Of Code projects.
 
-![](align_behaviour.gif)
+![6.8](align_behaviour.gif)
 
 above example from 6_7_group steering behaviours
 

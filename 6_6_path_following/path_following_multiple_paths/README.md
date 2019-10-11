@@ -6,5 +6,5 @@ A short distance along the path a target is created, and the vehicle seek this t
 this is the green spot.
 The seeking behaviour is implemented by using a steering force = current velocity - desired velocity, where desired velocity is maximum speed in the direction of the target. 
 
-[path following video](/path_following.gif)
+[path following video](path_following.gif)
 

@@ -4,7 +4,7 @@ from particle_system import ParticleSystem
 
 
 def setup():
-    size(498,298)
+    size(900,900)
     global vehicles
     vehicles = ParticleSystem()
 

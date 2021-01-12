@@ -29,10 +29,6 @@ class Vehicle:
 
     def applyForce(self, force):
         self.acceleration += force
-        line(
-            (self.location.x, self.location.y),
-            (self.location.x - force.x, self.location.y - force.y),
-        )
 
     def apply_drag(self, strength=1):
         neg_x = self.velocity.x * -1
@@ -75,12 +71,14 @@ class Vehicle:
         circle((self.location.x, self.location.y), 15)
 
     def set_colour(self):
+        print(self.velocity.x)
         self.colour = Color(
-            remap((self.velocity.angle), (0, TWO_PI), (0, 255)),
+            remap((self.velocity.x), (-10, 10), (0, 255)),
             255,
             255,
             color_mode="HSB",
         )
+
 
     def display_pointer(self, mass=40):
         stroke(255)
